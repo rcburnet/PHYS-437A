@@ -1,0 +1,27 @@
+Hi Robert,
+
+Sorry for the delay. Since this is due on Monday night, I'll keep it brief.
+
+
+General Instructions:
+
+- 437 weekly assignments are due to me the day *before* we meet, so I have time to read them. Realistically, the latest this can be is 10 pm the night before. 
+- please write up answers to assignments fully in latex; this way you can easily incorporate them into your final write-up
+- in general, I expect properly formatted plots, references, etc; if you don't know how to do this in latex we can discuss it on Tuesday
+
+
+For Tuesday:
+
+By way of introduction to the project, please reread Ryan's paper, and look things up on the web in order to answer the following questions. I expect roughly one paragraph of writing for each answer, in latex, with URLs/references.
+
+1) what is the SDSS survey? (give a 1 paragraph summary)
+2) what data did Ryan Speller get from SDSS?
+3) what is the ALTAS3D survey?
+4) what data did he get from ATLAS3D?
+5) what are the different data releases of SDSS? which did Ryan use, how many have there been since, and what is in them?
+6) how does one query the SDSS catalogue?
+
+If you get stuck let me know.
+
+Thanks,
+James

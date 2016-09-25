@@ -1,0 +1,86 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage{geometry}
+\geometry{letterpaper, portrait, margin=1in}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{adjustbox,lipsum}
+\usepackage{gensymb}
+\usepackage{enumerate}
+\setlength{\parindent}{0pt}
+\renewcommand\refname{References}
+
+\begin{document}
+\title{\scshape\LARGE University of Waterloo \vfill \huge\bfseries PHYS 437A Assignment 2 \vfill}
+\author{Robert Burnet \\ rcburnet@uwaterloo.ca \\ 20465122 }
+\maketitle
+
+\newpage
+
+Ryan Speller constructed his primary sample list from the parent sample of the Atlas3D survey \cite{Atlas3D}. The Atlas3D parent sample consisted of 871 galaxies, which Ryan applied cuts to leaving him with 274 primaries to study. The list of 871 primaries can be found on the NED database \cite{NED 871}.  They can also be found on the Atlas3D survey paper \cite{Atlas3D}, tables 3 and 4, which detail each of the primary's R.A., Dec., and distances.\\
+
+Using the R.A., Dec., and distances from the Atlas3D survey, I was able to successfully apply Ryan's first cut to the parent sample. The first cut was to remove Andromeda from the parent sample, as well as all galaxies who were within 1.5 Mpc of another galaxy in the survey. This was done in a Python script called ``871\_to\_274\_cuts.py", which can be found in the Dropbox folder.\\
+
+To do this, I first extracted the parent sample list of primaries from tables 3 and 4 of the Atlas3D survey paper and put them in a text file called ``list\_of\_primaries.txt". I then comma delimited the text file for readability in Python and called the text file ``new\_parent\_sample.txt". I then read the comma delimited text file of primaries and saved all their data to a list called ``primary\_list" and read off each galaxy's R.A., Dec., and distance values and saved them to a list (called ``coord") where each element of the list is a list of its corresponding galaxy's R.A., Dec., and distance values. I created two functions called ang\_sep and D\_dist which reads in two elements of the above list (ie. two galaxy's R.A., Dec., and distance lists) to calculate the angular separation of the two galaxies using the Haversine formula, and calculate and return their projected distances using cosine law in Mpc respectively.\\
+
+Using the above function, D\_dist, and the list of coordinates, coord, I created a ball tree with the metric set to the D\_dist function and the data points set to the coord list. In a for loop, I queried the ball tree to find the nearest neighbours of each galaxy and saved the nearest neighbour distances to a list called ``dist\_list" and the indices of the corresponding galaxy's nearest neighbour in a list called ``ind\_list". I made another for loop to loop into the dist\_list list and find any projected distances between a galaxy's nearest neighbour that were less than 1.5 Mpc and saved the indices of those who distances were less than 1.5 Mpc to a list called ``first\_cut\_list". This list was the list of primaries who were to be cut from the parent sample as they each had a neighbour within 1.5 Mpc from them. This left me with 356 primaries (after removing Andromeda), the same result as Ryan. I then deleted the cut galaxies from the primary\_list and coord lists and wrote the data of the 356 primaries that weren't cut to a text file called ``356\_primaries\_after\_first\_cut.txt".\\
+
+Next step was to apply the second cut. The second cut was to remove all galaxies that were not within the SDSS survey area or were in badly masked regions or regions of incomplete coverage. This first involved having to find the SDSS survey area and checking to see if each galaxy was with the survey area. This proved to be a difficult task as the SDSS survey area is not simply a range of R.A. and Dec. values that I could compare coordinates against.\\
+
+The SDSS took observations in drifts and produced stripes. These stripes are rectangles that follow great circles which do not follow lines of celestial latitude and longitude, but instead follow lines of constant ``survey latitude", $\eta$. $\eta$ is one coordinate, along with $\lambda$ which is called ``survey longitude", which correspond to the SDSS Survey Coordinate System. The Survey ($\eta$, $\lambda$) coordinate system is a pure rotation of the celestial coordinate system, where ($\eta$, $\lambda$) = (0, 90) corresponds to (R.A., Dec.) = (275, 0), ($\eta$, $\lambda$) = (57.5, 0) corresponds to (R.A., Dec.) = (0, 90), and ($\eta$, $\lambda$) = (0, 0) corresponds to (R.A., Dec.) = (185, 32.5). The survey coordinates are defined such that the center of a rectangular stripe of number $n$ (ie. Stripe $n$) corresponds to an $\eta$ coordinate defined by $\eta$ = $(n - 10)\times2.5\degree - 32.5\degree$ in the Northern Galactic Cap and $\eta$ = $(n - 82)\times 2.5\degree -32.5\degree$ in the Southern Galactic Cap and follows along the line of constant $\eta$ with a width of 2.5$\degree$. In the North, there are 45 stripes ($n$ = 1 - 45), and in the South, there are 30 stripes ($n$ = 61 - 90), each stripe with different $\lambda$ ranges (ie. rectangular stripe lengths). \cite{Survey Coordinates} \cite{Great Circle Drift Scanning}\\
+
+To compare the coordinates, I had to find the exact stripes ($\eta$, $\lambda$ ranges for each stripe) and convert the R.A., and Dec. coordinates of the galaxies in my sample to the Survey ($\eta$, $\lambda$) coordinates, which I could then do a series of if statements to see if each galaxy in ($\eta$, $\lambda$) coordinates were within any of the stripes. I have been struggling with trying to find the stripes for DR8, unfortunately. I could find the stripes for DR7 \cite{DR7 sky coverage}, but SDSS was incomplete after DR7 - not all of the Southern Galactic Cap had been surveyed by DR7, only 3 stripes had been complete, by DR8 the southern coverage was complete - so I couldn't successfully compare the coordinates and find galaxies which were not with the survey area. \\
+
+The third cut was to remove galaxies that were within 5$\degree$ of the center of the Virgo cluster (R.A., Dec.) = (186.75, 12.7167) or 3$\degree$ of the center of the Coma (R.A., Dec.) = (194.9542, 27.9806) or Leo (R.A., Dec.) = (176.1542, 19.7589) clusters. This involved creating a for loop to loop into the coordinates of the galaxies, apply the Haversine formula function from above, ang\_sep, to calculate each galaxy's angular separation from the Virgo, Coma, and Leo clusters, and see if their angular separations were $<$ 5$\degree$ from the Virgo cluster or $<$ 3$\degree$ from the Coma or Leo clusters. I appended the indices of the galaxies who were within those angular separations from the clusters to a list called ``third\_cut\_list." This resulted in 5 galaxies that were within 5$\degree$ of the Virgo cluster to be cut, and 3 galaxies that were within 3$\degree$ of the Coma or Leo clusters to be cut, the same result as Ryan. Note: I did not apply the cut in the script ``871\_to\_274\_cuts.py" (ie. delete the galaxies from the primary\_list and coord lists) because I did not successfully apply the second cut above. Until I can apply the second cut successfully, I won't apply the third cut.
+
+
+
+
+\newpage
+\center
+\begin{thebibliography}{1}
+\bibitem{Atlas3D} Cappellari, M., Emsellem, E., Krajnovi\'c, D., et al. 2011, MNRAS, 413, 813\\
+
+\bibitem{classic SDSS} Classic Sloan Digital Sky Survey. (n.d.). Retrieved September 18, 2016, from \url{http://classic.sdss.org/}\\
+
+\bibitem{Vaucouleurs} de Vaucouleurs, G., de Vaucouleurs, A., Corwin, H. G., Jr., et al. 1991, Third
+Reference Catalogue of Bright Galaxies (New York: Springer)\\
+
+\bibitem{Fukugita} Fukugita, M., Shimasaku, K., \& Ichikawa, T. 1995, PASP, 107, 945\\
+
+\bibitem{Great Circle Drift Scanning} Great Circle Drift Scanning. (n.d.). Retrieved September 25, 2016, from \url{http://classic.sdss.org/dr7/products/general/edr_html/node26.html}\\
+
+\bibitem{NED 871} NED results for object(s) in publication ``2011MNRAS.413..813C" (n.d.). Retrieved September 21, 2016, from \url{https://ned.ipac.caltech.edu/cgi-bin/nph-objsearch?search_type=Search&refcode=2011MNRAS.413..813C}
+
+\bibitem{SDSS-III} SDSS-III. (n.d.). Retrieved September 20, 2016, from \url{https://www.sdss3.org/}\\
+
+\bibitem{scope} SDSS Scope. (n.d.). Retrieved September 20, 2016, from \url{http://www.sdss.org/dr13/scope/}\\
+
+\bibitem{Survey Coordinates} SDSS Survey coordinates. (n.d.). Retrieved September 25, 2016, from \url{https://www.sdss3.org/dr10/algorithms/surveycoords.php}\\
+
+\bibitem{SQL tutorial} Searching for Data: A Tutorial. (n.d.). Retrieved September 18, 2016, from \url{http://skyserver.sdss.org/dr12/en/help/howto/search/searchhowtohome.aspx}\\
+
+\bibitem{2MASS} Skrutskie, M. F., Cutri, R. M., Stiening, R., et al. 2006, AJ, 131, 1163\\
+
+\bibitem{DR7 sky coverage} Sky coverage. (n.d.). Retrieved September 25, 2016, from \url{http://classic.sdss.org/dr7/coverage/}\\
+
+\bibitem{SDSS webpage} Sloan Digital Sky Surveys. (n.d.). Retrieved September 18, 2016, from \url{http://www.sdss.org/surveys/}\\
+
+\bibitem{instruments} Telescopes and Instruments. (n.d.). Retrieved September 20, 2016, from \url{http://www.sdss.org/instruments/}\\
+
+\bibitem{DR8} The Eighth SDSS Data Release (DR8). (n.d.). Retrieved September 20, 2016, from \url{https://www.sdss3.org/dr8/}\\
+
+\bibitem{DR9} The Ninth SDSS Data Release (DR9). (n.d.). Retrieved September 20, 2016, from \url{https://www.sdss3.org/dr9/}\\
+
+\bibitem{SDSS} York, D. G., Adelman, J., Anderson, J. E., Jr., et al. 2000, AJ, 120, 1579\\
+
+\bibitem{schema} Schema Browser. (n.d.). Retrieved September 18, 2016, from \url{http://skyserver.sdss.org/dr12/en/help/browser/browser.aspx}\\
+
+\end{thebibliography}
+
+\end{document}

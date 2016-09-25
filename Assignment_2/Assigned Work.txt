@@ -1,0 +1,13 @@
+For week 2:
+
+- reproduce Ryan's primary list:
+- get the raw data for the whole parent sample from the Atlas 3D website (where it is available, e.g. in the form of tables from the survey paper)
+- write a program to calculate the angular separation between points of known ra and dec, using the haversine formulae
+- write a second program to calculate the 3-D separation
+- using you separation calculator apply the cuts from Ryan's paper as best you understand them and see if you can get to 274 objects
+- we will then want the complementary data set, possibly minus objects in a few clusters like Leo and Virgo
+- document the selection process: how many things were cut at each step
+- for each of the final samples, generate a text file with the relevant fields in it for each galaxy
+
+- sign up for a CAS jobs account
+- install TopCat

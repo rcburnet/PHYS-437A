@@ -1,0 +1,89 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage{geometry}
+\geometry{letterpaper, portrait, margin=1in}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{adjustbox,lipsum}
+\usepackage{gensymb}
+\usepackage{enumerate}
+\setlength{\parindent}{0pt}
+\renewcommand\refname{References}
+
+\begin{document}
+\title{\scshape\LARGE University of Waterloo \vfill \huge\bfseries PHYS 437A Assignment 1 \vfill}
+\author{Robert Burnet \\ rcburnet@uwaterloo.ca \\ 20465122 }
+\maketitle
+
+\newpage
+
+\begin{enumerate}
+\item The Sloan Digital Sky Survey (SDSS; York et al. 2000) \cite{SDSS} is a massive endeavour that began in 2000 to provide imaging and spectroscopic surveys of a large swath of the night sky. It employs the use of two 2.5m Ritchey-Chr\'etien telescopes located at Apache Point Observatory and Las Campanas Observatory and four spectrographs.\cite{instruments} As of Data Release 8, it has completed its imaging survey of 14,555 square degrees of the night sky.\cite{DR8} It took observations of the night sky in five optical bands ($u^\prime$, $g^\prime$, $r^\prime$, $i^\prime$, and $z^\prime$) and obtained observations of about 500 million unique objects (200 million galaxies, 260 million stars) as well as spectra of more than 4 million objects from the imaging survey, including galaxies, stars, quasars, and unknown objects.\cite{scope} The goal of the survey was to provide data for studies of the distribution of luminous and nonluminous matter in the universe to support investigations of the large-scale structure of the universe.
+
+\item Ryan Speller retrieved objects in the photometric catalog of SDSS data release 8 that were within a projected distance of 1Mpc from the primary galaxies of his sample and had a photometric redshift of $\leq$ 0.15. He calculated the projected distances from SDSS photometric redshifts and from the distances of the primaries from the Atlas3D catalog. He had to limit objects of photometric redshift of $\leq$ 0.15 as photometric redshifts of the SDSS survey are imprecise. He retrieved the objects by performing an SQL query of the SDSS Catalogue Archive Server. His primaries were chosen to be within the SDSS survey area and to contain enough surrounding galaxies in the SDSS survey to obtain reasonable statistics. For each of the objects, he recorded:
+
+\begin{enumerate}[i]
+\item $r$-band magnitudes - Retrieved from SDSS if possible, otherwise from either RC3 $B$ magnitudes as detailed in de Vaucouleurs et al. (1991) \cite{Vaucouleurs} using the conversions and mean colours given in Fukugita et al. (1995) \cite{Fukugita} or from $K_S$ magnitudes from 2MASS and using the mean $r - K_S$ value for the sample to estimate $r$-band magnitudes.
+\item cmodel magnitudes - Composite model magnitudes retrieved from SDSS. Calculated from a linear combination of de Vaucouleurs and exponential fits in each photometric band that provided the best fits for the images.
+\item sizes - Exponential scale radii retrieved from SDSS. 
+\end{enumerate}
+He then identified the boundaries of masked regions of the SDSS DR8 to ensure he could obtain reasonable background statistics from the data. He then performed cuts by magnitude (the most important cut), color, and size on the SDSS data to reduce the background of distant galaxies near the primaries. From this, he searched for excess clustering of those galaxies around those primaries to measure the clustering signal and carry out the investigations of his paper (ie. explore the possible dependence of the clustering signal on primary luminosity and morphology and find the relative luminosity function per primary). [remember to cite Speller and Taylor article]
+
+\item The Atlas3D survey (Cappellari et al. 2011) \cite{Atlas3D} was a multiwavelength survey of 260 bright early-type (E and S0) galaxies. The goal of the survey was to study the galaxy formation of ETGs by obtaining observations of stellar population and kinematics, as well as the kinematics and distribution of HI, CO, and ionized gas, of a sample of ETGs. The sample was chosen (based off a morphology selection criteria) from a parent sample of 871 primaries that were within 42 Mpc of us, had $| \delta$ - 29$\degree | <$ 35$\degree$, $| b | >$ 15$\degree$, and were brighter than $M_K <$ -21.5 mag. The survey covered 37\% of the night sky out to a distance of 42 Mpc, corresponding to a volume of 1.16$\times$10$^5$ Mpc$^3$. The parent sample was put together using the $K_S$-band magnitudes from the Two Micron All Sky Survey (2MASS; Skrutskie et al. 2006) \cite{2MASS} (to calculate $M_K$) as well as distance estimates from literature.
+
+\item Ryan built his sample of primaries from the Atlas3D parent sample as it was a survey of nearby galaxies (within 42 Mpc), which enabled Ryan to discern satellites around the primaries as they were close enough to be resolved, and it overlapped with a large-area survey (the SDSS), which Ryan could use to identify satellites and retrieve data (such as r-band magnitude, cmodel magnitude, and size) about them. He applied an isolation criterion to the parent sample to pick out systems that were analogous to the Local Group. This involved:
+
+\begin{enumerate}[i]
+\item removing members that were within 1.5 Mpc of another member,
+\item removing objects that were not within the SDSS survey area, were in regions of incomplete coverage, or were in badly masked regions, and
+\item removing galaxies that were within 5$\degree$ of the center of the Virgo cluster or 3$\degree$ of the center of the Coma or Leo clusters.
+\end{enumerate} 
+
+This left him with 274 primaries to study. He then obtained distances, morphological T-types, and (2MASS) $K_S$ magnitudes for the sample. This allowed him to investigate the dependence of the clustering signal on primary morphology and luminosity. [remember to cite Speller and Taylor article]
+
+\item Since the day it first entered routine operation in the year 2000 to the present day, the SDSS has gone through numerous improvements and updates. To accommodate for this continuously changing environment and the need of more and new data, the project is broken up into data releases, each building on the previous release by adding new data from the instruments. From 2000-2008, the first survey (SDSS-I, 2000-2005) was carried out which provided imaging of over 8000 sq. degrees and spectra of over 700,000 objects through Data Release 1-5. SDSS-II (2005-2008) introduced three subprojects (Legacy, SEGUE, and a Supernova survey). It produced 3D maps containing about 1 million galaxies and 100,000 quasars. Data Release 6-7 were released in this timeframe. Data Release 6 (like DR2) saw significant changes to the processing software, adding different data products on top of the SDSS-II data.\cite{classic SDSS} SDSS-III (2008-2014) was carried out after upgrades to the spectrographs and addition of two new instruments to carry out four surveys (BOSS, SEGUE-2, APOGEE, and MARVELS) to supplement studies of the Milky Way, planetary systems, and dark energy and cosmological parameters, while surveying the night sky. Data Release 8-12 were released in this timeframe. Data Release 8 contains the full imaging survey of 14,555 square degrees from SDSS as well as measurements for about 500 million stars and galaxies and spectra of two million objects. Data Release 9 contains the first release of BOSS spectroscopy and updates to the cumulative SDSS archive. Data Release 10 contains the first release of APOGEE and updates to the archive. Data Release 11 and 12 were released simultaneously and served as the final release for SDSS-III, containing all the data taken by SDSS-III throughout its operation, including the complete dataset of BOSS and APOGEE.\cite{SDSS-III} Currently, SDSS-IV (2014-present) is in operation, which added more data, brought updates to previous surveys (eBOSS, APOGEE-2), and introduced new surveys (MaNGA) to supplement studies. Data Release 13 is the latest release which contains all the data from previous surveys as well as new data for the updated and new surveys that are taking place in SDSS-IV.\cite{SDSS webpage} Ryan Speller worked with Data Release 8. The new data releases since DR8 have been to release data of new or improved instruments (eg. MaNGA, eBOSS, APOGEE-2, etc) as well as to bring improvements to the software and survey data (eg. DR9 corrected astrometry for the imaging from DR8, it also includes improved stellar parameter estimates \cite{DR9}) which may result in discrepancies between DR8 and newer data releases.
+
+\item To query for data in the SDSS archive catalog, you have to perform an SQL query. For this, I will follow the SkyServer SQL tutorial. SkyServer holds all information on the objects catalogued by SDSS in a database. The database is divided into 63 tables which contain relevant data (eg. the ``specObj" table contains data of objects' spectra). These tables are broken further down into columns which contain only one attribute of the table (eg. ``class" column in ``specObj" table). The Schema Browser \cite{schema} provides a way to view and search through the tables and columns and find where data is located on the database. To request data from the database you must perform a query. SkyServer uses SQL to communicate with the database to return data based on your search criteria. Knowing what the tables and columns are enables you to perform a typical SQL query to the SkyServer database to retrieve the data you want from SDSS. This can all be done on the SkyServer website. The table from the query can be outputted in a variety of formats: HTML, XML, CSV, JSON, VOTable, Fits, and MyDB.\cite{SQL tutorial}
+\end{enumerate}
+
+
+\newpage
+\center
+\begin{thebibliography}{1}
+\bibitem{Atlas3D} Cappellari, M., Emsellem, E., Krajnovi\'c, D., et al. 2011, MNRAS, 413, 813\\
+
+\bibitem{classic SDSS} Classic Sloan Digital Sky Survey. (n.d.). Retrieved September 18, 2016, from \url{http://classic.sdss.org/}\\
+
+\bibitem{Vaucouleurs} de Vaucouleurs, G., de Vaucouleurs, A., Corwin, H. G., Jr., et al. 1991, Third
+Reference Catalogue of Bright Galaxies (New York: Springer)\\
+
+\bibitem{Fukugita} Fukugita, M., Shimasaku, K., \& Ichikawa, T. 1995, PASP, 107, 945\\
+
+\bibitem{SDSS-III} SDSS-III. (n.d.). Retrieved September 20, 2016, from \url{https://www.sdss3.org/}\\
+
+\bibitem{scope} SDSS Scope. (n.d.). Retrieved September 20, 2016, from \url{http://www.sdss.org/dr13/scope/}\\
+
+\bibitem{SQL tutorial} Searching for Data: A Tutorial. (n.d.). Retrieved September 18, 2016, from \url{http://skyserver.sdss.org/dr12/en/help/howto/search/searchhowtohome.aspx}\\
+
+\bibitem{2MASS} Skrutskie, M. F., Cutri, R. M., Stiening, R., et al. 2006, AJ, 131, 1163\\
+
+\bibitem{SDSS webpage} Sloan Digital Sky Surveys. (n.d.). Retrieved September 18, 2016, from \url{http://www.sdss.org/surveys/}\\
+
+\bibitem{instruments} Telescopes and Instruments. (n.d.). Retrieved September 20, 2016, from \url{http://www.sdss.org/instruments/}\\
+
+\bibitem{DR8} The Eighth SDSS Data Release (DR8). (n.d.). Retrieved September 20, 2016, from \url{https://www.sdss3.org/dr8/}\\
+
+\bibitem{DR9} The Ninth SDSS Data Release (DR9). (n.d.). Retrieved September 20, 2016, from \url{https://www.sdss3.org/dr9/}\\
+
+\bibitem{SDSS} York, D. G., Adelman, J., Anderson, J. E., Jr., et al. 2000, AJ, 120, 1579\\
+
+\bibitem{schema} Schema Browser. (n.d.). Retrieved September 18, 2016, from \url{http://skyserver.sdss.org/dr12/en/help/browser/browser.aspx}\\
+
+\end{thebibliography}
+
+\end{document}
