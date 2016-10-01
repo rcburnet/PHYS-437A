@@ -1,7 +1,7 @@
-This is LuaTeX, Version beta-0.76.0-2013062820 (rev 4627)  (format=lualatex 2016.1.7)  1 OCT 2016 10:54
+This is LuaTeX, Version beta-0.76.0-2013062820 (rev 4627)  (format=lualatex 2016.1.7)  1 OCT 2016 12:35
 **Robert_Burnet_20465122_phys_437A_assignment_2.tex
 
-("C:/Users/Robert Burnet/Dropbox/Robert/PHYS-437A/Assignment_2/report/Robert_Bu
+("C:/Users/Robert Burnet/Dropbox/Robert/PHYS-437A/Assignment_3/report/Robert_Bu
 rnet_20465122_phys_437A_assignment_2.tex"
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ara
@@ -585,7 +585,7 @@ Package: gensymb 2003/07/02 v1.0 (WaS)
 Package: enumerate 1999/03/05 v3.00 enumerate extensions (DPC)
 \@enLab=\toks27
 )
-("C:/Users/Robert Burnet/Dropbox/Robert/PHYS-437A/Assignment_2/report/Robert_Bu
+("C:/Users/Robert Burnet/Dropbox/Robert/PHYS-437A/Assignment_3/report/Robert_Bu
 rnet_20465122_phys_437A_assignment_2.aux")
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
 LaTeX Font Info:    ... okay on input line 18.
@@ -667,9 +667,9 @@ LaTeX Info: Redefining \ref on input line 18.
 LaTeX Info: Redefining \pageref on input line 18.
 LaTeX Info: Redefining \nameref on input line 18.
 
-("C:/Users/Robert Burnet/Dropbox/Robert/PHYS-437A/Assignment_2/report/Robert_Bu
+("C:/Users/Robert Burnet/Dropbox/Robert/PHYS-437A/Assignment_3/report/Robert_Bu
 rnet_20465122_phys_437A_assignment_2.out")
-("C:/Users/Robert Burnet/Dropbox/Robert/PHYS-437A/Assignment_2/report/Robert_Bu
+("C:/Users/Robert Burnet/Dropbox/Robert/PHYS-437A/Assignment_3/report/Robert_Bu
 rnet_20465122_phys_437A_assignment_2.out")
 \@outlinefile=\write3
 LaTeX Info: Redefining \celsius on input line 18.
@@ -708,64 +708,39 @@ Underfull \hbox (badness 10000) in paragraph at lines 27--28
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 29--30
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 31--32
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--34
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 35--36
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 37--38
+Underfull \hbox (badness 10000) in paragraph at lines 55--56
 
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 39--40
+Underfull \hbox (badness 10000) in paragraph at lines 73--74
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 41--42
+Underfull \hbox (badness 10000) in paragraph at lines 75--76
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 43--44
+Underfull \hbox (badness 10000) in paragraph at lines 77--78
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 45--46
-
- []
-
-[3]
-Underfull \hbox (badness 3407) in paragraph at lines 64--65
+[3] [4]
+Underfull \hbox (badness 3407) in paragraph at lines 112--113
 [][]\OT1/cmr/m/n/10 NED re-sults for ob-ject(s) in pub-li-ca-tion ``2011MN-RAS.
 413..813C" (n.d.). Re-trieved Septem-
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 94.
-[4]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 94.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 144.
+[5]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 144.
 
-("C:/Users/Robert Burnet/Dropbox/Robert/PHYS-437A/Assignment_2/report/Robert_Bu
+("C:/Users/Robert Burnet/Dropbox/Robert/PHYS-437A/Assignment_3/report/Robert_Bu
 rnet_20465122_phys_437A_assignment_2.aux")
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 94.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 94.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 144.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 144.
 Package rerunfilecheck Info: File `Robert_Burnet_20465122_phys_437A_assignment_2
 .out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
@@ -773,30 +748,27 @@ Package rerunfilecheck Info: File `Robert_Burnet_20465122_phys_437A_assignment_2
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 94.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 144.
  )
 
 Here is how much of LuaTeX's memory you used:
- 9115 strings out of 494074
+ 9167 strings out of 494074
  100000,552014 words of node,token memory allocated
- 366 words of node memory still in use:
+ 370 words of node memory still in use:
     nodes
-   avail lists: 1:1,2:19,3:254,4:1300,5:278,6:4557,7:240,8:45,9:105,10:302
- 12349 multiletter control sequences out of 65536+200000
+   avail lists: 1:1,2:25,3:270,4:1382,5:95,6:2192,7:104,8:48,9:135,10:85
+ 12350 multiletter control sequences out of 65536+200000
  57 fonts using 1604279 bytes
- 42i,6n,40p,1419b,327s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 42i,6n,40p,815b,398s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:
 /Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/P
-rogram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Prog
-ram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program 
-Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program File
-s (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (
-x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files (x86)
-/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on Robert_Burnet_20465122_phys_437A_assignment_2.pdf (4 pages, 1
-19437 bytes).
+rogram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Progr
+am Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program F
+iles (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on Robert_Burnet_20465122_phys_437A_assignment_2.pdf (5 pages, 9
+6121 bytes).
 
-PDF statistics: 108 PDF objects out of 1000 (max. 8388607)
- 25 named destinations out of 1000 (max. 131072)
+PDF statistics: 148 PDF objects out of 1000 (max. 8388607)
+ 76 named destinations out of 1000 (max. 131072)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

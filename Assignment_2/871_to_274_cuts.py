@@ -28,6 +28,7 @@ from sklearn.neighbors import BallTree
 #new_file is comma delimited parent sample list
 new_file = open('new_parent_sample.txt')
 primary_list = new_file.readlines()
+new_file.close()
 for i in range(len(primary_list)):
     primary_list[i] = primary_list[i].split(',')
 
@@ -125,6 +126,40 @@ first_cut_list = sorted(first_cut_list)[::-1] #list is reversed so I can delete
 #Now first_cut_list is 515 elements long with Andromeda, leaving us with 356
 # primaries after the first cut like in Ryan's paper.
 
+##########################################################################
+#this is some work done for week 3, I compared the list of primaries I cut
+# as they were within 1.5 Mpc of their nearest neighbour to Ryan's list of
+# 274 primaries. I found that all of my primaries I cut, Ryan also cut.
+test_list = []
+for i in range(len(first_cut_list)):
+    test_list.append(primary_list[first_cut_list[i]][0])
+
+file_274_primary = open('Ryans_list_of_274_primaries.txt')
+list_274_primary = file_274_primary.readlines()
+file_274_primary.close()
+
+for i in range(len(list_274_primary)):
+    list_274_primary[i] = list_274_primary[i].split('\t')
+
+new_test_list = [] #list of primaries that were in my first cut list and
+                   #weren't in Ryan's final list.
+for i in range(len(test_list)):
+    count = 0
+    for j in range(len(list_274_primary)):
+        if test_list[i] == list_274_primary[j][0]:
+            count += 1
+    if count == 0:
+        new_test_list.append(test_list[i])
+
+print "number of primaries in my first cut list that are in Ryan's final list:"   
+print len(first_cut_list) - len(new_test_list) #print number of primaries in
+                                          # my list of primaries that I
+                                          # applied my first cut minues
+                                          # those that weren't in Ryan's
+                                          # list (ie. the number of primaries
+                                          # I cut that are in Ryan's list)
+########################################################################
+
 #Apply the cut
 for i in first_cut_list:
     del primary_list[i]
@@ -151,7 +186,11 @@ new_primary_list_file.close()
 
 #Convert celestial coordinates of primaries to Survey coordinate system, then
 # compare primaries Survey coordinates to stripe regions to see if galaxies are
-# within survey coverage.
+# within survey coverage. NOTE: NO LONGER BEING USED. New attempt below.
+
+#Failed attempt. Kept, but commented out, just in case. See below for actual
+# attempt.
+'''
 ind_list2 = [] #second index list corresponding to indices of primaries to be cut
 survey_coord = [] #list of coordinates in survey coordinate system (lambda, eta)
 for i in range(len(primary_list)):
@@ -295,18 +334,124 @@ for i in range(len(primary_list)):
         if not 35.5 > lambda_coord > -7.1:
             ind_list2.append(i)
             
-    #Southern Galactic Cap (don't have data for):
-    #elif ...
+    #Southern Galactic Cap (don't have all data for):
+    elif -48.75 > eta_coord > -46.25:
+        if not 126 > lambda_coord > -152:
+            ind_list2.append(i)
+    elif -33.75 > eta_coord > -31.25:
+        if not 126 > lambda_coord > -126:
+            ind_list2.append(i)
+    elif -23.75 > eta_coord > -21.25:
+        if not 126 > lambda_coord > -126:
+            ind_list2.append(i)
 
     #Otherwise, galaxies are not within survey area if their eta_coord don't
     # correspond to a stripe's eta_coord range:
     else:
         ind_list2.append(i)
+'''
 
-#Need to actually apply the cut. Note: I did not apply the cut yet as I could
-# not successfully find the galaxies to cut. After applying cut, need to write
-# left over primaries (after cut) to new text file.
+#Second cut being applied:
 
+#This is my new attempt at finding primaries within SDSS footprint and removing
+# primaries that aren't in SDSS footprint. It involves writing names and
+# coordinates of the 356 primaries that were left after the first cut above
+# to a text file, uploading that text file to http://cas.sdss.org/dr8/en/tools/crossid/crossid.asp
+# and taking the output as the list of primaries that are within the SDSS
+# footprint (292 primaries)
+
+#write coordinates to coord_file.txt, to feed to http://cas.sdss.org/dr8/en/tools/crossid/crossid.asp
+# to check if coordinates of primaries are in SDSS
+coord_file = open('coord_file.txt', 'w')
+
+coord_lines = []
+coord_file.write('name ra dec\n')
+for i in range(len(coord)):
+    coord_lines.append([str(coord[i][0]),str(coord[i][1])])
+    coord_lines[i] = primary_list[i][0]+" "+" ".join(coord_lines[i])+'\n'
+    coord_file.write(coord_lines[i])
+
+coord_file.close()
+
+#list_of_primaries_within_SDSS_coverage.txt is the output of the CrossID query
+# which is a list of the primaries from the coord_file.txt file that are in
+# SDSS (total of 292 primaries). I just copied and pasted it from html to txt.
+primary_list_second_cut_file = open('list_of_primaries_within_SDSS_coverage.txt')
+primary_list_second_cut = primary_list_second_cut_file.readlines()
+primary_list_second_cut_file.close()
+for i in range(len(primary_list_second_cut)):
+    primary_list_second_cut[i] = primary_list_second_cut[i].split('\t')[0]
+    
+del primary_list_second_cut[0] #remove first element, which is just column names
+
+#new list of indices of primaries not in SDSS footprint
+ind_list3 = []
+for i in range(len(primary_list)):
+    if primary_list[i][0] not in primary_list_second_cut:
+        ind_list3.append(i)
+
+##########################################################################
+#this is some work done for week 3, I compared the list of primaries I cut
+# as they were not within the SDSS survey area according to the CrossID tool
+# to Ryan's list of 274 primaries. I found that 13 of my cut primaries were
+# in Ryan's list. 13 of the primaries I cut Ryan did not cut.
+test_list = []
+for i in range(len(ind_list3)):
+    test_list.append(primary_list[ind_list3[i]][0])
+
+file_274_primary = open('Ryans_list_of_274_primaries.txt')
+list_274_primary = file_274_primary.readlines()
+file_274_primary.close()
+
+for i in range(len(list_274_primary)):
+    list_274_primary[i] = list_274_primary[i].split('\t')
+
+new_test_list = [] #list of primaries that were in my second cut list and
+                   #weren't in Ryan's list.
+for i in range(len(test_list)):
+    count = 0
+    for j in range(len(list_274_primary)):
+        if test_list[i] == list_274_primary[j][0]:
+            count += 1
+    if count == 0:
+        new_test_list.append(test_list[i])
+    else:
+        print test_list[i] #print primaries that were to be cut but were in
+                           # Ryan's list
+
+print "number of primaries in my second cut list that are in Ryan's final list:"
+print len(ind_list3) - len(new_test_list) #print number of primaries in
+                                          # my list of primaries that I
+                                          # applied my second cut minues
+                                          # those that weren't in Ryan's
+                                          # list (ie. the number of primaries
+                                          # I cut that are in Ryan's list
+########################################################################
+
+#Apply cut to primaries not in SDSS footprint
+ind_list3 = sorted(ind_list3)[::-1]
+for i in ind_list3:
+    del primary_list[i]
+    del coord[i]
+
+#now primary_list and coord is list of 292 primaries that are within SDSS
+# footprint
+
+#Need to apply rest of cuts for second cut (ie. cut primaries that are in
+# badly masked regions or regions of incomplete coverage).
+
+#Write primaries to new text file, must be applied after second cut,
+# current set to 292 primaries after cut of galaxies not within SDSS footprint.
+# Still need to apply rest of second cut.
+primary_list_second_cut = []
+for i in range(len(primary_list)):
+    primary_list_second_cut.append(','.join(primary_list[i]))
+
+new_primary_list_file = open('292_primaries_after_second_cut.txt', 'w') #Change to 282 once second cut is fully applied
+for i in range(len(primary_list_second_cut)):
+    new_primary_list_file.write(primary_list_second_cut[i])
+
+new_primary_list_file.close()
 
 
 #Now apply third cut
@@ -334,6 +479,63 @@ for i in range(len(coord)):
         leo_num += 1
         third_cut_list.append(i)
 
+##########################################################################
+#this is some work done for week 3, I compared the list of primaries I cut
+# as they were not within the SDSS survey area according to the CrossID tool
+# to Ryan's list of 274 primaries. I found that 13 of my cut primaries were
+# in Ryan's list. 13 of the primaries I cut Ryan did not cut.
+test_list = []
+for i in range(len(third_cut_list)):
+    test_list.append(primary_list[third_cut_list[i]][0])
+
+file_274_primary = open('Ryans_list_of_274_primaries.txt')
+list_274_primary = file_274_primary.readlines()
+file_274_primary.close()
+
+for i in range(len(list_274_primary)):
+    list_274_primary[i] = list_274_primary[i].split('\t')
+
+new_test_list = [] #list of primaries that were in my second cut list and
+                   #weren't in Ryan's list.
+for i in range(len(test_list)):
+    count = 0
+    for j in range(len(list_274_primary)):
+        if test_list[i] == list_274_primary[j][0]:
+            count += 1
+    if count == 0:
+        new_test_list.append(test_list[i])
+
+print "number of primaries in my third cut list that are in Ryan's final list:"
+print len(third_cut_list) - len(new_test_list) #print number of primaries in
+                                          # my list of primaries that I
+                                          # applied my second cut minues
+                                          # those that weren't in Ryan's
+                                          # list (ie. the number of primaries
+                                          # I cut that are in Ryan's list
+########################################################################
+
 #Need to actually apply the cut. Note: I did not apply the cut yet as I could
-# not successfully apply the second cut above. After applying cut, need to write
-# left over primaries (after cut) to new text file.
+# not successfully apply the second cut fully above. After applying cut, need
+# to write left over primaries (after cut) to new text file.
+
+
+ind_list4 = sorted(third_cut_list)[::-1]
+for i in ind_list4:
+    del primary_list[i]
+    del coord[i]
+
+#This leaves me with 284 primaries (10 more than Ryan's 274. The 10 are primaries
+# in badly masked regions or regions of incomplete coverage
+
+#Write primary_list to new text file.
+primary_list_third_cut = []
+for i in range(len(primary_list)):
+    primary_list_third_cut.append(','.join(primary_list[i]))
+
+new_primary_list_file = open('284_primaries_after_third_cut.txt', 'w')
+for i in range(len(primary_list_third_cut)):
+    new_primary_list_file.write(primary_list_third_cut[i])
+
+new_primary_list_file.close()
+
+
