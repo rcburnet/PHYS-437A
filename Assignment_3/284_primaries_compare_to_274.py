@@ -55,7 +55,7 @@ for i in range(len(list_274_primary)):
         if list_274_primary[i][0] == list_284_primary[j][0]:
             count += 1
     #if count == 0:
-    #    print list_274_primary[i][0]
+    #    print list_274_primary[i]
 
 #I get back 13 primaries that were in Ryan's list but not mine. 13 primaries
 # I cut that Ryan did not.

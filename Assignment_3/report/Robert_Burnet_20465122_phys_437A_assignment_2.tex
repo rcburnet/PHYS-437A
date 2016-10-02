@@ -24,35 +24,9 @@
 
 This week, I compared my list of 284 primaries to Ryan's list of 274 primaries to check if the extra 10 in my list were the ones missing in Ryan's list and why Ryan excluded them.\\
 
-I made a script called ``284\_primaries\_compared\_to\_274.py" to compare the two lists and print the primaries in my list that were missing from Ryan's list. When I did that, instead of getting back 10 extra primaries, I got back 23. 23 primaries in my list that weren't in Ryan's list. These were primaries that Ryan cut that I did not cut. Namely:\\
+I made a script called ``284\_primaries\_compared\_to\_274.py" to compare the two lists and print the primaries in my list that were missing from Ryan's list. When I did that, instead of getting back 10 extra primaries, I got back 23. 23 primaries in my list that weren't in Ryan's list. These were primaries that Ryan cut that I did not cut.\\
 
-\begin{enumerate}
-\item NGC2549
-\item PGC042549
-\item NGC0573
-\item NGC0864
-\item NGC1012
-\item NGC1924
-\item NGC2690
-\item NGC3359
-\item NGC4348
-\item NGC4602
-\item NGC4604
-\item NGC4691
-\item NGC6015
-\item NGC6070
-\item NGC6118
-\item NGC6339
-\item NGC6384
-\item NGC6675
-\item NGC7814
-\item PGC005363
-\item UGC03258
-\item UGC10288
-\item UGC12857
-\end{enumerate}
-
-I then went back to last week's script to see what was going on. I found out that there was a discrepancy between my cut of primaries not within the SDSS survey and Ryan's cut. I had cut 64 primaries in that cut, as the SDSS DR8 CrossID tool did not give back those primaries when I queried them in the database (ie. these galaxies were not within 0.5 arcminutes of a detection in SDSS). However, 13 of those primaries were in Ryan's list of 274 primaries. These were primaries I cut that Ryan did not cut. Using the SDSS DR8 Navigate Tool \cite{navigate}, these 13 were in fact in SDSS. The CrossID tool was not sufficient at providing all the primaries that were in SDSS that I queried. The 13 primaries that I should not have cut were namely:\\
+I then went back to last week's script to see what was going on. I found out that there was a discrepancy between my cut of primaries not within the SDSS survey and Ryan's cut. I had cut 64 primaries in that cut, as the SDSS DR8 CrossID tool did not give back those primaries when I queried them in the database (ie. these galaxies were not within 0.5 arcminutes of a detection in SDSS). However, 13 of those primaries were in Ryan's list of 274 primaries. These were primaries I cut that Ryan did not cut. Using the SDSS DR8 and DR13 Navigate Tools \cite{navigate} \cite{navigate DR13}, these 13 were in fact in SDSS. The CrossID tool was not sufficient at providing all the primaries that were in SDSS that I queried. The 13 primaries that I should not have cut were namely:\\
 
 \begin{enumerate}
 \item NGC0628
@@ -74,26 +48,186 @@ So in all, I had 23 extra primaries in my final list, not the expected 10, from 
 
 I checked to make sure my first and third cuts were applied properly. This involved writing in last week's script, ``871\_to\_274\_cuts.py", code which looked into each list of cut primaries for each cut and making sure each primary that I cut was not in Ryan's list (ie. the first and third cuts I applied were the same primaries that Ryan cut). Both the first and third cuts cut primaries that Ryan also cut. Therefore, the 23 extra primaries Ryan must have cut in his second cut, and they must have been primaries in badly masked regions, or regions of incomplete coverage.\\
 
-To check why Ryan cut these extra 23 primaries (why they were in badly masked regions or regions of incomplete coverage), I queried the 23 primaries in the SDSS DR8 Navigate Tool. I provide reasoning for why they are cut, as well as pictures to support my reasoning.\\
+To check why Ryan cut these extra 23 primaries (why they were in badly masked regions or regions of incomplete coverage), I queried the 23 primaries in the SDSS DR8 and DR13 Navigate Tool. I provide reasoning for why they are cut, as well as pictures to support my reasoning.\\
 
 \begin{enumerate}
-\item NGC0628 - can't seem to find out why this was cut from Ryan's list.
-\item NGC1073
-\item NGC2775
-\item NGC2903
-\item NGC3169
-\item NGC3184
-\item NGC3344
-\item NGC4559
-\item NGC4725
-\item NGC4736
-\item NGC5005
-\item NGC5371
-\item NGC7714
+\item NGC2549 - Galaxy very close to edge of survey
+\item PGC042549 - Galaxy very close to edge of survey
+\item NGC0573 - Not sure why this isn't in Ryan's list
+\item NGC0864 - Not sure why this isn't in Ryan's list
+\item NGC1012 - Near survey edge
+\item NGC1924 - In badly masked region
+\item NGC2690 - In badly masked region and near edge of survey
+\item NGC3359 - Near badly masked region
+\item NGC4348 - Near survey edge
+\item NGC4602 - Near survey edge
+\item NGC4604 - Near survey edge
+\item NGC4691 - Not sure why this isn't in Ryan's list
+\item NGC6015 - Near survey edge
+\item NGC6070 - Badly masked region
+\item NGC6118 - At edge of survey
+\item NGC6339 - Near badly masked region
+\item NGC6384 - In badly masked region
+\item NGC6675 - Near edge of survey
+\item NGC7814 - Not sure why this isn't in Ryan's list
+\item PGC005363 - Not sure why this isn't in Ryan's list
+\item UGC03258 - Not sure why this isn't in Ryan's list
+\item UGC10288 - In badly masked region
+\item UGC12857 - Not sure why this isn't in Ryan's list
 \end{enumerate}
 
+Most of the 23 primaries are clearly in bad regions, but for some it isn't immediately clear why Ryan removed them from his sample. The rest of this document will be the figures of the above 23 primaries from the SDSS DR8 and DR13 Navigate Tools.\\
+
+\newpage
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{figures/NGC2549.pdf}
+\caption{NGC2549 SDSS DR8 Navigate Tool image with masks}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{figures/PGC042549.pdf}
+\caption{PGC042549 SDSS DR8 Navigate Tool image with masks}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{figures/NGC0573.pdf}
+\caption{NGC0573 SDSS DR8 Navigate Tool image with masks}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{figures/NGC0864.pdf}
+\caption{NGC0864 SDSS DR8 Navigate Tool image with masks}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{figures/NGC1012.pdf}
+\caption{NGC1012 SDSS DR8 Navigate Tool image with masks}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{figures/NGC1924.pdf}
+\caption{NGC1924 SDSS DR8 Navigate Tool image with masks}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{figures/NGC2690.pdf}
+\caption{NGC2690 SDSS DR8 Navigate Tool image with masks}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{figures/NGC3359.pdf}
+\caption{NGC3359 SDSS DR8 Navigate Tool image with masks}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{figures/NGC4348.pdf}
+\caption{NGC4348 SDSS DR8 Navigate Tool image with masks}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{figures/NGC4602.pdf}
+\caption{NGC4602 SDSS DR8 Navigate Tool image with masks}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{figures/NGC4604.pdf}
+\caption{NGC4604 SDSS DR8 Navigate Tool image with masks}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{figures/NGC4691.pdf}
+\caption{NGC4691 SDSS DR8 Navigate Tool image with masks}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{figures/NGC6015.pdf}
+\caption{NGC6015 SDSS DR8 Navigate Tool image with masks}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{figures/NGC6015.pdf}
+\caption{NGC6015 SDSS DR8 Navigate Tool image with masks}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{figures/NGC6070.pdf}
+\caption{NGC6070 SDSS DR8 Navigate Tool image with masks}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{figures/NGC6118.pdf}
+\caption{NGC6118 SDSS DR8 Navigate Tool image with masks}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{figures/NGC6339.pdf}
+\caption{NGC6339 SDSS DR8 Navigate Tool image with masks}
+\end{figure}
 
 
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{figures/NGC6384.pdf}
+\caption{NGC6384 SDSS DR8 Navigate Tool image with masks}
+\end{figure}
+
+\clearpage
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{figures/NGC6675.pdf}
+\caption{NGC6675 SDSS DR8 Navigate Tool image with masks}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{figures/NGC7814.pdf}
+\caption{NGC7814 SDSS DR8 Navigate Tool image with masks}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{figures/PGC005363.pdf}
+\caption{PGC005363 SDSS DR8 Navigate Tool image with masks}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{figures/UGC03258.pdf}
+\caption{UGC03258 SDSS DR8 Navigate Tool image with masks}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{figures/UGC10288.pdf}
+\caption{UGC10288 SDSS DR8 Navigate Tool image with masks}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{figures/UGC12857.pdf}
+\caption{UGC12857 SDSS DR8 Navigate Tool image with masks}
+\end{figure}
+
+\clearpage
 
 \newpage
 \center
@@ -116,6 +250,8 @@ Reference Catalogue of Bright Galaxies (New York: Springer)\\
 \bibitem{CrossID} SDSS CrossID for DR8. (n.d.). Retrieved September 26, 2016, from \url{http://cas.sdss.org/dr8/en/tools/crossid/crossid.asp}\\
 
 \bibitem{navigate} SDSS DR8 Navigate Tool. (n.d.). Retrieved October 01, 2016, from \url{http://skyserver.sdss.org/dr8/en/tools/chart/navi.asp}\\
+
+\bibitem{navigate DR13} SDSS DR13 Navigate Tool. (n.d.). Retrieved October 01, 2016, from \url{http://skyserver.sdss.org/dr13/en/tools/chart/navi.aspx}\\
 
 \bibitem{scope} SDSS Scope. (n.d.). Retrieved September 20, 2016, from \url{http://www.sdss.org/dr13/scope/}\\
 
