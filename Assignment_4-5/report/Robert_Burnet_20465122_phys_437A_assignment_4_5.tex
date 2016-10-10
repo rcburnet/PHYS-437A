@@ -1,0 +1,115 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage{geometry}
+\geometry{letterpaper, portrait, margin=1in}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{adjustbox,lipsum}
+\usepackage{gensymb}
+\usepackage{enumerate}
+\usepackage{listings}
+\setlength{\parindent}{0pt}
+\renewcommand\refname{References}
+
+\begin{document}
+\title{\scshape\LARGE University of Waterloo \vfill \huge\bfseries PHYS 437A Assignment 2 \vfill}
+\author{Robert Burnet \\ rcburnet@uwaterloo.ca \\ 20465122 }
+\maketitle
+
+\newpage
+I have found a way to query SDSS to determine whether or not an object is in the SDSS survey through CasJobs \cite{casjobs}. First, you must import a table of RA and DEC of the objects you wish to check are in the SDSS survey to your ``MyDB" database on CasJobs, an example table is shown below:\\
+
+\begin{table}[h!]
+\footnotesize
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|}
+NAME & RA & DEC & SBF & NED\_D & Virgo & VHel & D & M\_K & A\_B & T\_type & log\_RE \\
+\hline
+IC0598 & 153.202423 & 43.145546 & 0 & 0 & 0 & 2256 & 35.3 & -22.60 & 0.06 & -0.1 & 1.02\\
+IC0719 & 175.077042 & 9.009861 & 0 & 0 & 0 & 1833 & 29.4 & -22.70 & 0.22 & -2.0 & 1.10\\
+IC3631 & 189.950195 & 12.973927 & 0 & 0 & 0 & 2822 & 42.0 & -22.01 & 0.17 & -1.3 & 1.13\\
+NGC0448 & 18.818876 & -1.626105 & 1 & 1 & 0 & 1908 & 29.5 & -23.02 & 0.26 & -2.5 & 1.05\\
+\end{tabular}
+\end{table}
+
+This table can be a comma or tab delimited text or csv file. On my ``MyDB" database, I called this table ``MyTable\_0". Then, you can perform the following SQL query on CasJobs under the DR8 context to retrieve the names of the objects in your table that are in SDSS:\\
+
+\begin{lstlisting}[language=SQL]
+SELECT 
+  t.NAME
+FROM mydb.MyTable_0 AS t 
+WHERE 
+  dbo.fInFootprintEq(t.ra, t.dec, 0.1) = 1
+\end{lstlisting}
+
+The query selects all the names of the objects in my table and uses the DR8 function fInFootprintEq to check if the area specified by the object's RA, DEC, and a chosen angular radius (0.1 arcminutes in the above example) is in SDSS. fInFootprintEq returns 1 as ``True" (ie. object is in SDSS) and 0 as ``False". \\
+
+Using the above method, after applying the first cut in Ryan's paper which left me with 356 primaries, I am left with 315 primaries that are within the SDSS survey area. 8 of those are to be cut in the third cut (primaries near Coma, Leo, or Virgo clusters), leaving me with 33 primaries (315 - 8 - 274) that Ryan must have cut due to being in badly masked regions or regions of incomplete coverage.\\
+
+I chose to write my own code to determine the masked regions and find areas of masked regions as Mangle \cite{mangle} was not sufficient for this task.\\
+
+\newpage
+\center
+\begin{thebibliography}{1}
+\bibitem{image masks} Algorithms: Image masks. (n.d.). Retrieved October 02, 2016, from \url{https://www.sdss3.org/dr8/algorithms/masks.php}\\
+
+\bibitem{Atlas3D} Cappellari, M., Emsellem, E., Krajnovi\'c, D., et al. 2011, MNRAS, 413, 813\\
+
+\bibitem{casjobs} 
+CasJobs. (n.d.). Retrieved October 09, 2016, from \url{http://skyserver.sdss.org/CasJobs/}\\
+
+
+\bibitem{classic SDSS} Classic Sloan Digital Sky Survey. (n.d.). Retrieved September 18, 2016, from \url{http://classic.sdss.org/}\\
+
+\bibitem{dr9 masks} Creating a Large Scale Structure Galaxy Catalog. (n.d.). Retrieved October 02, 2016, from \url{https://www.sdss3.org/dr9/tutorials/lss_galaxy.php}\\
+
+\bibitem{Vaucouleurs} de Vaucouleurs, G., de Vaucouleurs, A., Corwin, H. G., Jr., et al. 1991, Third
+Reference Catalogue of Bright Galaxies (New York: Springer)\\
+
+\bibitem{Fukugita} Fukugita, M., Shimasaku, K., \& Ichikawa, T. 1995, PASP, 107, 945\\
+
+\bibitem{Great Circle Drift Scanning} Great Circle Drift Scanning. (n.d.). Retrieved September 25, 2016, from \url{http://classic.sdss.org/dr7/products/general/edr_html/node26.html}\\
+
+\bibitem{mangle} Mangle: Overview. (n.d.). Retrieved October 02, 2016, from \url{http://space.mit.edu/~molly/mangle/}\\
+
+\bibitem{NED 871} NED results for object(s) in publication ``2011MNRAS.413..813C" (n.d.). Retrieved September 21, 2016, from \url{https://ned.ipac.caltech.edu/cgi-bin/nph-objsearch?search_type=Search&refcode=2011MNRAS.413..813C}\\
+
+\bibitem{NYUVAGC} NYU Value-Added Galaxy Catalog. (n.d.). Retrieved October 02, 2016, from \url{http://sdss.physics.nyu.edu/vagc/}\\
+
+\bibitem{SDSS-III} SDSS-III. (n.d.). Retrieved September 20, 2016, from \url{https://www.sdss3.org/}\\
+
+\bibitem{CrossID} SDSS CrossID for DR8. (n.d.). Retrieved September 26, 2016, from \url{http://cas.sdss.org/dr8/en/tools/crossid/crossid.asp}\\
+
+\bibitem{navigate} SDSS DR8 Navigate Tool. (n.d.). Retrieved October 01, 2016, from \url{http://skyserver.sdss.org/dr8/en/tools/chart/navi.asp}\\
+
+\bibitem{navigate DR13} SDSS DR13 Navigate Tool. (n.d.). Retrieved October 01, 2016, from \url{http://skyserver.sdss.org/dr13/en/tools/chart/navi.aspx}\\
+
+\bibitem{scope} SDSS Scope. (n.d.). Retrieved September 20, 2016, from \url{http://www.sdss.org/dr13/scope/}\\
+
+\bibitem{Survey Coordinates} SDSS Survey coordinates. (n.d.). Retrieved September 25, 2016, from \url{https://www.sdss3.org/dr10/algorithms/surveycoords.php}\\
+
+\bibitem{SQL tutorial} Searching for Data: A Tutorial. (n.d.). Retrieved September 18, 2016, from \url{http://skyserver.sdss.org/dr12/en/help/howto/search/searchhowtohome.aspx}\\
+
+\bibitem{2MASS} Skrutskie, M. F., Cutri, R. M., Stiening, R., et al. 2006, AJ, 131, 1163\\
+
+\bibitem{DR7 sky coverage} Sky coverage. (n.d.). Retrieved September 25, 2016, from \url{http://classic.sdss.org/dr7/coverage/}\\
+
+\bibitem{SDSS webpage} Sloan Digital Sky Surveys. (n.d.). Retrieved September 18, 2016, from \url{http://www.sdss.org/surveys/}\\
+
+\bibitem{instruments} Telescopes and Instruments. (n.d.). Retrieved September 20, 2016, from \url{http://www.sdss.org/instruments/}\\
+
+\bibitem{DR8} The Eighth SDSS Data Release (DR8). (n.d.). Retrieved September 20, 2016, from \url{https://www.sdss3.org/dr8/}\\
+
+\bibitem{DR9} The Ninth SDSS Data Release (DR9). (n.d.). Retrieved September 20, 2016, from \url{https://www.sdss3.org/dr9/}\\
+
+\bibitem{SDSS} York, D. G., Adelman, J., Anderson, J. E., Jr., et al. 2000, AJ, 120, 1579\\
+
+\bibitem{schema} Schema Browser. (n.d.). Retrieved September 18, 2016, from \url{http://skyserver.sdss.org/dr12/en/help/browser/browser.aspx}\\
+
+\end{thebibliography}
+
+\end{document}
