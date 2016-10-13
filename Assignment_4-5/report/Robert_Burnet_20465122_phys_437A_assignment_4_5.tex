@@ -52,6 +52,23 @@ Using the above method, after applying the first cut in Ryan's paper which left 
 
 I chose to write my own code to determine the masked regions and find areas of masked regions as Mangle \cite{mangle} was not sufficient for this task.\\
 
+Why doesn't this work:\\
+
+\begin{lstlisting}[language=SQL]
+SELECT 
+  p0.objid, p0.ra, p0.dec
+FROM 
+  mydb.primaries_in_sdss_315 as t, 
+  PhotoObj as p0
+JOIN dbo.fGetNearestObjEq(t.ra,t.dec,1) AS p1 ON p0.objid = p1.objid
+\end{lstlisting}
+
+I want the above to query SDSS to find the nearest object in SDSS to each of the 315 primaries that I found are in SDSS and retrieve the object ID so that I can use Ryan's SQL query (which joins by object ID) to find nearby objects. The above gives me error: \\
+
+The multi-part identifier "t.ra" could not be bound. The multi-part identifier "t.dec" could not be bound.\\
+
+But why doesn't that error pop up in my first SQL query which uses t.ra and t.dec on the similar function finFootprintEq?
+
 \newpage
 \center
 \begin{thebibliography}{1}

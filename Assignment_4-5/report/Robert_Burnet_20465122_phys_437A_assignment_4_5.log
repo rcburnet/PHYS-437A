@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2016/dev) (preloaded format=pdflatex 2016.10.9)  9 OCT 2016 15:58
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2016/dev) (preloaded format=pdflatex 2016.10.9)  10 OCT 2016 16:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -753,19 +753,34 @@ Underfull \hbox (badness 10000) in paragraph at lines 53--54
 
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 55--56
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 66--67
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 68--69
+
+ []
+
 [2]
-Underfull \hbox (badness 2460) in paragraph at lines 79--79
+Underfull \hbox (badness 2460) in paragraph at lines 96--96
 []\OT1/cmr/m/n/10 NED re-sults for ob-ject(s) in pub-li-ca-tion ``2011MN-RAS.41
 3..813C" (n.d.). Re-trieved Septem-
  []
 
 [3]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 115.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 132.
  [4]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 115.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 132.
  (./Robert_Burnet_20465122_phys_437A_assignment_4_5.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 115.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 115.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 132.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 132.
 Package rerunfilecheck Info: File `Robert_Burnet_20465122_phys_437A_assignment_
 4_5.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
@@ -773,13 +788,13 @@ Package rerunfilecheck Info: File `Robert_Burnet_20465122_phys_437A_assignment_
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 115.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 132.
  ) 
 Here is how much of TeX's memory you used:
- 10583 strings out of 493126
- 153655 string characters out of 6138646
- 361497 words of memory out of 5000000
- 13872 multiletter control sequences out of 15000+600000
+ 10596 strings out of 493126
+ 153836 string characters out of 6138646
+ 362497 words of memory out of 5000000
+ 13878 multiletter control sequences out of 15000+600000
  12273 words of font info for 48 fonts, out of 8000000 for 9000
  1137 hyphenation exceptions out of 8191
  42i,8n,74p,455b,1334s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -791,10 +806,10 @@ xmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dis
 t/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/
 type1/public/amsfonts/cm/cmtt10.pfb>
 Output written on Robert_Burnet_20465122_phys_437A_assignment_4_5.pdf (4 pages,
- 108082 bytes).
+ 110840 bytes).
 PDF statistics:
- 134 PDF objects out of 1000 (max. 8388607)
- 119 compressed objects within 2 object streams
- 39 named destinations out of 1000 (max. 500000)
+ 142 PDF objects out of 1000 (max. 8388607)
+ 127 compressed objects within 2 object streams
+ 46 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
