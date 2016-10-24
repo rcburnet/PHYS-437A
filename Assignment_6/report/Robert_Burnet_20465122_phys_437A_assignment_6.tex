@@ -1,0 +1,115 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage{geometry}
+\geometry{letterpaper, portrait, margin=1in}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{adjustbox,lipsum}
+\usepackage{gensymb}
+\usepackage{enumerate}
+\usepackage{listings}
+\setlength{\parindent}{0pt}
+\renewcommand\refname{References}
+
+\begin{document}
+\title{\scshape\LARGE University of Waterloo \vfill \huge\bfseries PHYS 437A Assignment 6 \vfill}
+\author{Robert Burnet \\ rcburnet@uwaterloo.ca \\ 20465122 }
+\maketitle
+
+\newpage
+%NOTE: need to create ``primaries\_in\_SDSS\_315" table in mydb. I updated the table as it now has DA values in a new column (projected angular separations of 1 Mpc at distance of primaries, to be used in SQL query below). Was going to do it today but CasJobs crashed and won't load now. See Assignment 4-5 report for query to create table of primaries that are within SDSS from MyTable\_0 in mydb (remember to name output table to primaries\_in\_SDSS\_315 !) Then, apply SQL query below to find nearby objects for each primary. Also put table in Ryans_list directory as CasJobs_315_primaries_in_SDSS.txt! Need to do the same for complementary list!
+
+%Turns out it crashed because I tried to delete an old table. Don't delete anything yet!
+
+%Next: get number of nearby objects for each primary and plot histogram. I found an SQL query to do that for CasJobs that uses the COUNT function (google CasJobs SELECT COUNT or something similar, or see advanced queries bookmark or look through CasJobs history to try and find it).
+
+I created the complementary list to Ryan's list (after applying the first and third cut) which left me with 421 primaries which were within 1.5 Mpc of another member and not near Virgo, Leo, or Coma clusters (see the script called ``complementary\_list\_generator.py" in Assignment\_6 folder). I added this list to my CasJobs DB so that I could query SDSS to find the primaries that are within SDSS (see Assignment 4-5 report for how I did this). Querying SDSS through CasJobs, I found that 408 of my 421 primaries were within SDSS. \\
+
+Next, I queried SDSS to find all objects within a projected distance of 1 Mpc of the 315 primaries that survived the first cut (primaries not within 1.5 Mpc of another primary) and were also within SDSS. I did this to try and determine why Ryan cut the (315 - 274) 41 primaries that were in my primary list and not his final list. These 41 primaries were applied during the second cut (cut primaries that are in badly masked regions or regions of incomplete coverage). To determine what primaries were in badly masked regions or regions of incomplete coverage, I had to find the number of objects within 1 Mpc of each primary so I could generate masks and find the badly masked regions as Ryan did. The below SQL query was sent to CasJobs to find all the objects within 1 Mpc of the primaries to begin this process:\\
+
+\begin{lstlisting}[language=SQL, breaklines=true]
+SELECT 
+  m.name, n.objid, n.distance as 'distance (arcmin)', p2.ra as RA, p2.dec as DEC
+from MyDB.primaries_in_sdss_315_fixed AS m 
+  CROSS APPLY dbo.fGetNearbyObjEq(m.ra, m.dec, 120) AS n
+  JOIN PhotoObj AS p2 ON n.objid=p2.objid 
+  JOIN Photoz AS p1 ON p1.objid=p2.objid  WHERE p1.z < .15 AND p1.z > 0
+\end{lstlisting}
+
+The output of the above SQL query was placed in the dropbox folder with filename\\ ``nearby\_objects\_to\_315\_primaries\_120\_arcseconds.csv" in the directory ./Assignment\_6/Ryans\_list/. It is 400 MB large and contains over 5 million objects. An example of the output is shown below:\\
+
+%put sample table here
+  
+Note 1: ``MyTable\_1" is the table that I save the result of the above SQL query to. All the items selected are put into that newly created table. Any future queries should have a different table name as that specific table exists on my database now. The table ``primaries\_in\_sdss\_315\_fixed" is the table of the 315 primaries that are in SDSS after applying the first cut which I query to find all the objects within 1 Mpc of each primary.\\
+
+Note 2: The above query finds ALL objects that are within 2\degree of the primaries. When applying the above SQL query, I must be careful as there will be duplicate entries, as the 2\degree separation will have overlap between primaries. The above SQL will also include primaries within 2\degree of each other as nearby objects. If I instead change the 120 arcminutes in the function fGetNearbyObjEq to m.da to get nearby objects within a projected 1 Mpc distance away from each of the primaries, the query will then find all objects that are within a project 1 Mpc distance away from the primaries instead of within 2\degree. For Ryan's sample, this is okay as it won't output duplicates since each primary is greater than 1.5 Mpc of another (so no overlap between primaries). However, when applying such a query with the complementary list (primaries that are within 1.5 Mpc of each other), I must be careful as there will be duplicate entries, as the 1 Mpc separation will have overlap between primaries. Such a query will also include primaries within 1 Mpc of each other as nearby objects.\\
+
+
+Next step is to create a histogram of number of nearby objects for each primary and start writing the code as detailed in Assignment\_4-5.
+
+\newpage
+\center
+\begin{thebibliography}{1}
+\bibitem{image masks} Algorithms: Image masks. (n.d.). Retrieved October 02, 2016, from \url{https://www.sdss3.org/dr8/algorithms/masks.php}\\
+
+\bibitem{Atlas3D} Cappellari, M., Emsellem, E., Krajnovi\'c, D., et al. 2011, MNRAS, 413, 813\\
+
+\bibitem{casjobs} 
+CasJobs. (n.d.). Retrieved October 09, 2016, from \url{http://skyserver.sdss.org/CasJobs/}\\
+
+
+\bibitem{classic SDSS} Classic Sloan Digital Sky Survey. (n.d.). Retrieved September 18, 2016, from \url{http://classic.sdss.org/}\\
+
+\bibitem{dr9 masks} Creating a Large Scale Structure Galaxy Catalog. (n.d.). Retrieved October 02, 2016, from \url{https://www.sdss3.org/dr9/tutorials/lss_galaxy.php}\\
+
+\bibitem{Vaucouleurs} de Vaucouleurs, G., de Vaucouleurs, A., Corwin, H. G., Jr., et al. 1991, Third
+Reference Catalogue of Bright Galaxies (New York: Springer)\\
+
+\bibitem{Fukugita} Fukugita, M., Shimasaku, K., \& Ichikawa, T. 1995, PASP, 107, 945\\
+
+\bibitem{Great Circle Drift Scanning} Great Circle Drift Scanning. (n.d.). Retrieved September 25, 2016, from \url{http://classic.sdss.org/dr7/products/general/edr_html/node26.html}\\
+
+\bibitem{mangle} Mangle: Overview. (n.d.). Retrieved October 02, 2016, from \url{http://space.mit.edu/~molly/mangle/}\\
+
+\bibitem{NED 871} NED results for object(s) in publication ``2011MNRAS.413..813C" (n.d.). Retrieved September 21, 2016, from \url{https://ned.ipac.caltech.edu/cgi-bin/nph-objsearch?search_type=Search&refcode=2011MNRAS.413..813C}\\
+
+\bibitem{NYUVAGC} NYU Value-Added Galaxy Catalog. (n.d.). Retrieved October 02, 2016, from \url{http://sdss.physics.nyu.edu/vagc/}\\
+
+\bibitem{SDSS-III} SDSS-III. (n.d.). Retrieved September 20, 2016, from \url{https://www.sdss3.org/}\\
+
+\bibitem{CrossID} SDSS CrossID for DR8. (n.d.). Retrieved September 26, 2016, from \url{http://cas.sdss.org/dr8/en/tools/crossid/crossid.asp}\\
+
+\bibitem{navigate} SDSS DR8 Navigate Tool. (n.d.). Retrieved October 01, 2016, from \url{http://skyserver.sdss.org/dr8/en/tools/chart/navi.asp}\\
+
+\bibitem{navigate DR13} SDSS DR13 Navigate Tool. (n.d.). Retrieved October 01, 2016, from \url{http://skyserver.sdss.org/dr13/en/tools/chart/navi.aspx}\\
+
+\bibitem{scope} SDSS Scope. (n.d.). Retrieved September 20, 2016, from \url{http://www.sdss.org/dr13/scope/}\\
+
+\bibitem{Survey Coordinates} SDSS Survey coordinates. (n.d.). Retrieved September 25, 2016, from \url{https://www.sdss3.org/dr10/algorithms/surveycoords.php}\\
+
+\bibitem{SQL tutorial} Searching for Data: A Tutorial. (n.d.). Retrieved September 18, 2016, from \url{http://skyserver.sdss.org/dr12/en/help/howto/search/searchhowtohome.aspx}\\
+
+\bibitem{2MASS} Skrutskie, M. F., Cutri, R. M., Stiening, R., et al. 2006, AJ, 131, 1163\\
+
+\bibitem{DR7 sky coverage} Sky coverage. (n.d.). Retrieved September 25, 2016, from \url{http://classic.sdss.org/dr7/coverage/}\\
+
+\bibitem{SDSS webpage} Sloan Digital Sky Surveys. (n.d.). Retrieved September 18, 2016, from \url{http://www.sdss.org/surveys/}\\
+
+\bibitem{instruments} Telescopes and Instruments. (n.d.). Retrieved September 20, 2016, from \url{http://www.sdss.org/instruments/}\\
+
+\bibitem{DR8} The Eighth SDSS Data Release (DR8). (n.d.). Retrieved September 20, 2016, from \url{https://www.sdss3.org/dr8/}\\
+
+\bibitem{DR9} The Ninth SDSS Data Release (DR9). (n.d.). Retrieved September 20, 2016, from \url{https://www.sdss3.org/dr9/}\\
+
+\bibitem{SDSS} York, D. G., Adelman, J., Anderson, J. E., Jr., et al. 2000, AJ, 120, 1579\\
+
+\bibitem{schema} Schema Browser. (n.d.). Retrieved September 18, 2016, from \url{http://skyserver.sdss.org/dr12/en/help/browser/browser.aspx}\\
+
+\end{thebibliography}
+
+\end{document}

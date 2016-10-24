@@ -1,0 +1,54 @@
+So the last assignment was:
+
+A4/5: 
+
+4.1 - build up a list of primaries:
+- in groups (soa neighbour within 1.5 Mpc)
+- but not in Virgo, Coma, or Leo
+- and not near survey edges
+- an not heavily masked (could wait for this)
+
+done: (for the first cut)
+
+4.2 - spend about 3 hours trying to understand Mangle
+
+
+
+done: (mangle was too complicated)
+
+- if that doesn't work out, give up and write your own python code
+
+Code should:
+- given a list of coordinates (r_i, d_i) from SDSS (e.g. those returned by an SQL  query - cf. Ryan's thesis)
+- assume all this is on a cartesian grid (~ x_i, y_i)
+- subtract coordinates of primary -> dx_i = x_i - x_p, etc. (or the bottom left corner?)
+- find cell size such that expect <N> = 4 objects per cell
+- divide offset by cell size and take int to get cell number: i_cell = int(dx_i/cell_size)
+- loop over list, counting objects in cells (incrementing cell counts)
+- then loop over final cells, remove *isolated* empty cells
+- count only connect empty regions with 2 or more cells
+-> masking map
+
+4.3 Once either code is working, try it out with a test file and a set of radii
+
+[I anticipate this may take more than 1 week]
+
+Final code should be something you can call on a sub-catalogue (a list of objects in a region), with specified radii for the annular bins, that returns the "active" are in each
+
+So this last bit need to be finished. Steps are:
+
+6.1
+- figure out how to generate *individual* queries (or queries for small sets, e.g. groups of 10) for CasJobs
+- test this out with a few
+- setup directories to hold the results
+- run this for everything
+
+6.2
+- plot a histogram of the results (total number of objects returned for each primary)
+- calculate the galactic latitude of each primary using its ra and dec (or query NED)
+- plot number vs. latitude
+- select out a ~ `normal' bit of the distribution and a ~ 'badly masked' bit; document, explain and justify this
+- run the same cut for Ryan's sample and see if you can identify the 33 objects that were considered 'badly masked'
+
+6.3 
+- start writing the code suggested for 4.2 above, testing as you go

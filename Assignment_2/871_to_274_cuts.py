@@ -9,20 +9,43 @@ from sklearn.neighbors import BallTree
 # is easily readable in python. Commented out because it has already been
 # done.
 
+#formula to calculate angular separation of 1.0 Mpc at distance of specific
+# primary in arcminutes.
+def DA(d):
+    d = float(d)
+    theta = np.arctan(1.0/d)*10800/np.pi
+    return theta
+
 ######################################################################
-#primary_file = open('list_of_871_primaries.txt')
-#new_file = open('new_parent_sample.txt','w')
+primary_file = open('list_of_871_primaries.txt')
+new_file = open('new_parent_sample.txt','w')
 
-#primary_list = primary_file.readlines()
+primary_list = primary_file.readlines()
 
-##for loop to remove whitespaces, comma deliminate columns, and write
-## new primary list that is easily readible in python
-#for i in range(len(primary_list)):
-#    clean_string = ' '.join(primary_list[i].split())
-#    primary_list[i] = clean_string.replace(' ',',')
-#    new_file.write(primary_list[i]+'\n')
+#for loop to remove whitespaces, comma deliminate columns, and write
+# new primary list that is easily readible in python
+for i in range(len(primary_list)):
+    clean_string = ' '.join(primary_list[i].split())
+    primary_list[i] = clean_string.replace(' ',',')
+    new_file.write(primary_list[i]+'\n')
     
-#new_file.close()
+new_file.close()
+
+
+new_file = open('new_parent_sample.txt','r')
+newer_file = open('new_parent_sample_with_DA.txt', 'w')
+primary_list = new_file.readlines()
+new_file.close()
+primary_list_new = []
+for i in range(len(primary_list)):
+    primary_list[i] = primary_list[i].split(',')
+    primary_list[i][-1] = primary_list[i][-1].split('\n')[0]
+    primary_list[i].append(str(DA(primary_list[i][7]))+'\n')
+    primary_list_new.append(','.join(primary_list[i]))
+    newer_file.write(primary_list_new[i])
+
+newer_file.close()
+
 ######################################################################
 
 #new_file is comma delimited parent sample list
@@ -33,9 +56,9 @@ for i in range(len(primary_list)):
     primary_list[i] = primary_list[i].split(',')
 
 #Note: Columns are: Galaxy name, RA (deg), DEC(deg), SBF, NED-D, Virgo,
-# VHel (km/s), D (Mpc), M_K (mag), A_B (mag), T-type, and log(Re) (")
+# VHel (km/s), D (Mpc), M_K (mag), A_B (mag), T-type, log(Re) ("), and DA (")
 # in that order. For the cuts that Ryan applied, we care about RA, DEC,
-# and D.
+# and D. DA (") is generated in the function DA(d) below.
 
 #Functions to calculate 3D distance between two points using Haversine
 # formula to calculate angular separation, then cosine law to find
@@ -68,6 +91,7 @@ def D_dist(array1, array2):
     phi = ang_sep(array1, array2)*np.pi/180.0
     d = np.sqrt(d1**2.0 + d2**2.0 - 2*d1*d2*np.cos(phi))
     return d
+
 
 #coord is list of (RA,DEC,D) coordinates of primaries, 871 points in 3D.
 coord = []
@@ -170,6 +194,8 @@ for i in first_cut_list:
 #create new text file for new primary list after first cut:
 primary_list_first_cut = []
 for i in range(len(primary_list)):
+    primary_list[i][-1] = primary_list[i][-1].split('\n')[0]
+    primary_list[i].append(str(DA(primary_list[i][7]))+'\n')
     primary_list_first_cut.append(','.join(primary_list[i]))
 
 new_primary_list_file = open('356_primaries_after_first_cut.txt', 'w')

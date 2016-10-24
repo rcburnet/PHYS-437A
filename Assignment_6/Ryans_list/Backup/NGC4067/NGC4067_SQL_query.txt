@@ -1,0 +1,5 @@
+SELECT
+ p1.objid, p1.z, p1.zErr, p2.ra, p2.dec, p2.clean, p2.flags, p2.type, p2.expRad_u, p2.expRad_g, p2.expRad_r, p2.expRad_i, p2.expRad_z, p2.expRadErr_u, p2.expRadErr_g, p2.expRadErr_r, p2.expRadErr_i, p2.expRadErr_z, p2.cmodelMag_u, p2.cmodelMag_g, p2.cmodelMag_r, p2.cmodelMag_i, p2.cmodelMag_z, p2.cmodelMagErr_u, p2.cmodelMagErr_g, p2.cmodelMagErr_r, p2.cmodelMagErr_i, p2.cmodelMagErr_z, p2.extinction_u, p2.extinction_g, p2.extinction_r, p2.extinction_i, p2.extinction_z
+FROM PhotoObj AS p2
+ JOIN Photoz AS p1 ON p1.objid = p2.objid
+JOIN dbo.fGetNearbyObjEq(181.0482,10.85435,120) AS p0 ON p2.objid = p0.objid WHERE p1.z < 0.15 AND p1.z > 0
